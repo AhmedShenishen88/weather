@@ -1,0 +1,60 @@
+import requests
+import tkinter as tk
+import pandas as pd
+import matplotlib.pyplot as plt
+
+
+def get_weather():
+    city = entry.get()
+
+    url = f"https://wttr.in/{city}?format=j1"
+
+    try:
+        response = requests.get(url)
+        data = response.json()
+
+        # Extract hourly temperature (first day)
+        hours = []
+        temps = []
+
+        for i, hour in enumerate(data["weather"][0]["hourly"]):
+            hours.append(i)
+            temps.append(int(hour["tempC"]))
+
+        # Create DataFrame
+        df = pd.DataFrame({
+            "hour": hours,
+            "temperature": temps
+        })
+
+        # Show text result
+        avg_temp = df["temperature"].mean()
+        result.set(f"Average Temp: {avg_temp:.2f}°C")
+
+        # Plot graph
+        plt.figure()
+        plt.plot(df["hour"], df["temperature"])
+        plt.title(f"Temperature in {city}")
+        plt.xlabel("Hour")
+        plt.ylabel("Temp °C")
+        plt.show()
+
+    except:
+        result.set("Error fetching data")
+
+
+# GUI
+window = tk.Tk()
+window.title("Weather Analyzer")
+
+tk.Label(window, text="Enter City:").pack()
+
+entry = tk.Entry(window)
+entry.pack()
+
+tk.Button(window, text="Get Weather", command=get_weather).pack()
+
+result = tk.StringVar()
+tk.Label(window, textvariable=result).pack()
+
+window.mainloop()
