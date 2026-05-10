@@ -46,13 +46,19 @@ def get_weather():
 # GUI
 window = tk.Tk()
 window.title("Weather Analyzer")
+window.geometry("300x200")
 
-tk.Label(window, text="Enter City:").pack()
+
+tk.Label(window, text="Enter City:", bg="lightblue", font=("Arial", 12)).pack()
+
+entry = tk.Entry(window, font=("Arial", 12))
+
 
 entry = tk.Entry(window)
 entry.pack()
 
-tk.Button(window, text="Get Weather", command=get_weather).pack()
+tk.Button(window, text="Get Weather", bg="blue",
+          fg="white", command=get_weather).pack()
 
 result = tk.StringVar()
 tk.Label(window, textvariable=result).pack()
