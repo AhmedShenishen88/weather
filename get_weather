@@ -49,16 +49,18 @@ window.title("Weather Analyzer")
 window.geometry("300x200")
 
 
-tk.Label(window, text="Enter City:", bg="lightblue", font=("Arial", 12)).pack()
+tk.Label(window, text="Enter City:", bg="lightblue",
+         fg="white", font=("Arial", 12)).pack(pady=10)
 
 entry = tk.Entry(window, font=("Arial", 12))
 
+""" widget.pack(padx=10, pady=10) """
 
 entry = tk.Entry(window)
 entry.pack()
 
 tk.Button(window, text="Get Weather", bg="blue",
-          fg="white", command=get_weather).pack()
+          fg="white", command=get_weather).pack(pady=10)
 
 result = tk.StringVar()
 tk.Label(window, textvariable=result).pack()
